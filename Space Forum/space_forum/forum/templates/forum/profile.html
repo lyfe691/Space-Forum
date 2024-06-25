@@ -1,0 +1,16 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-body">
+        <h2 class="card-title text-center">Profile</h2>
+        <p class="card-text"><strong>Username:</strong> {{ user.username }}</p>
+        <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-block">Edit Profile</a>
+        <form method="post" action="{% url 'logout' %}" class="mt-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-block">Logout</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

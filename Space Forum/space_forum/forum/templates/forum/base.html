@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Forum</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <h1>Space Forum</h1>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'contact' %}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'chat_room_list' %}">Chat Rooms</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'signup' %}">Signup</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main class="container my-5">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Space Forum</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

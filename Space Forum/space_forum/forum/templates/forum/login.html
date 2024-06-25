@@ -1,0 +1,31 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-body">
+        <h2 class="card-title text-center">Login</h2>
+        <form method="post" class="form-horizontal">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {{ form.password.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

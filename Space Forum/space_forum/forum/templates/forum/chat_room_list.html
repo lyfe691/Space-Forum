@@ -1,0 +1,41 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Create a New Chat Room</h2>
+                    <form method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Create</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Active Chat Rooms</h2>
+                    <ul class="list-group">
+                        {% for chat_room in chat_rooms %}
+                            <li class="list-group-item">
+                                <a href="{% url 'chat_room' chat_room.name %}">{{ chat_room.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

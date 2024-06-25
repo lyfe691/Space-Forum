@@ -1,0 +1,48 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 800px;">
+    <div class="card-body">
+        <h2 class="card-title">Chat Room: {{ room_name }}</h2>
+        <div id="chat-log" class="border p-3 mb-3" style="height: 300px; overflow-y: scroll;"></div>
+        <input id="chat-message-input" type="text" size="100">
+        <button id="chat-message-submit" class="btn btn-primary">Send</button>
+    </div>
+</div>
+
+<script>
+    const roomName = "{{ room_name }}";
+    const chatLog = document.getElementById('chat-log');
+    const chatMessageInput = document.getElementById('chat-message-input');
+    const chatMessageSubmit = document.getElementById('chat-message-submit');
+
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const message = data['message'];
+        chatLog.value += (message + '\n');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    chatMessageInput.focus();
+    chatMessageInput.onkeyup = function(e) {
+        if (e.keyCode === 13) {  // Enter key
+            chatMessageSubmit.click();
+        }
+    };
+
+    chatMessageSubmit.onclick = function(e) {
+        const message = chatMessageInput.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        chatMessageInput.value = '';
+    };
+</script>
+{% endblock %}

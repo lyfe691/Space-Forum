@@ -1,0 +1,14 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Forums</h2>
+        <ul class="list-group list-group-flush">
+            {% for forum in forums %}
+                <li class="list-group-item"><a href="{% url 'thread_list' forum.id %}">{{ forum.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
